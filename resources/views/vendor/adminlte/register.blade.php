@@ -11,6 +11,12 @@
         <div class="register-logo">
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
         </div>
+        @if(isset($error_message))
+            <div class="callout callout-danger">
+                <h5>Oops !</h5>
+                <p>{{ $error_message }}</p>
+            </div>
+        @endif
         <div class="card">
             <div class="card-body register-card-body">
             <p class="login-box-msg">{{ __('adminlte::adminlte.register_message') }}</p>

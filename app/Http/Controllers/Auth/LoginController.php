@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -25,7 +30,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/quizz';
 
     /**
      * Create a new controller instance.
@@ -35,5 +40,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+        if ($user){
+            if (decrypt($user->password) == $request['password']){
+                Auth::login($user);
+            }
+        }
+        return redirect('/quizz');
+    }
+
+    public function view()
+    {
+        $datas = [];
+        if(session()->exists('message')){
+            $datas['message'] = session()->get('message');
+            session()->remove('message');
+        }
+        return view('auth.login', $datas);
+    }
+
+    public function logout()
+    {
+        if (Auth::check()){
+            Auth::logout();
+        }
+        return redirect('/');
     }
 }

@@ -11,12 +11,12 @@
         </div>
       </form>
   @elseif (is_array($item))
-      <li @if (isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item {{ $item['top_nav_class'] }}">
+      <li @if (isset($item['id'])) id="{{ $item['id'] }}" @endif class="nav-item {{ $item['top_nav_class'] }}" style="margin-right: 10px">
           <a class="nav-link @if (isset($item['submenu']))dropdown-item dropdown-toggle @endif" href="{{ $item['href'] }}"
              @if (isset($item['submenu'])) data-toggle="dropdown" @endif
              @if (isset($item['target'])) target="{{ $item['target'] }}" @endif
           >
-              <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{ isset($item['icon_color']) ? 'text-' . $item['icon_color'] : '' }}"></i>
+              <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{ isset($item['icon_color']) ? 'text-' . $item['icon_color'] : '' }}" style="margin-right: 5px"></i>
   			{{ $item['text'] }}
 
               @if (isset($item['label']))

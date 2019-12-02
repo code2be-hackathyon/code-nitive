@@ -11,22 +11,20 @@
 |
 */
 
-Route::get('/home', function () {
-    return view('quizz');
-})->name('allQuizz');
+Route::get('/','QuizzController@homeQuizz')->name('homeQuizz');
 
-Route::get('/MyQuizz', function () {
-    return view('activeQuizz');
-})->name('activeQuizz');
+Route::get('/quizz','QuizzController@homeQuizz')->name('homeQuizz');
 
-Route::get('/archiveQuizz', function () {
-    return view('archiveQuizz');
-})->name('archiveQuizz');
+Route::get('/quizz/active', 'QuizzController@activeQuizz')->name('activeQuizz');
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
+Route::get('/quizz/archived', 'QuizzController@archiveQuizz')->name('archiveQuizz');
 
-Route::get('/logout', function () {
-    return view('auth.login');
-})->name('logout');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+
+Route::get('/login', 'Auth\LoginController@view')->name('loginView');
+
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('/register', 'Auth\RegisterController@view')->name('registerView');
+
+Route::post('/register', 'Auth\RegisterController@register')->name('register');

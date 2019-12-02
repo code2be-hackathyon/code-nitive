@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             $user->email = $faker->email;
             $user->firstname = $faker->firstName;
             $user->lastname = $faker->lastName;
-            $user->password = $faker->password;
+            $user->password = encrypt('password');
             $user->save();
         }
     }

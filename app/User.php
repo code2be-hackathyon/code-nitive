@@ -16,18 +16,25 @@ class User extends Authenticatable
     protected $table = 'user';
 
     protected $fillable = [
-        'email','firstname', 'lastname', 'password', 'api_token'
+        'id','email','firstname', 'lastname', 'password', 'api_token'
     ];
 
-    public static function users()
+    public function getIncrementing()
     {
-        return User::all();
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
     }
 
     public function save(array $options = [])
     {
-        if (is_null($this->api_token)){
+        if (is_null($this->id)){
             $this->id = Str::random(32);
+        }
+        if (is_null($this->api_token)){
             $this->api_token = Str::random(64);
         }
         parent::save($options);
