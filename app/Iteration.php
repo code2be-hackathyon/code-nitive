@@ -12,6 +12,8 @@ class Iteration extends Model
 
     protected $fillable = ['user_quizz_id','order','date','note'];
 
+    public $timestamps = false;
+
     public function getIncrementing()
     {
         return false;
@@ -24,7 +26,9 @@ class Iteration extends Model
 
     public function save(array $options = [])
     {
-        $this->id = Str::random(32);
+        if(is_null($this->id)){
+            $this->id = Str::random(32);
+        }
         parent::save($options);
     }
 }

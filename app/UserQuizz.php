@@ -2,18 +2,29 @@
 
 namespace App;
 
-use foo\bar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Answer extends Model
+class UserQuizz extends Model
 {
-
-    protected $table = 'answer';
-
-    protected $fillable = ['question_id','user_id','userResponse'];
-
+    protected $table = "user_quizz";
+    protected $fillable = ['user_id', 'quizz_id', 'note'];
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function quizz()
+    {
+        return $this->belongsTo(Quizz::class, 'quizz_id');
+    }
+
+    public function iterations()
+    {
+        return $this->hasMany(Iteration::class, 'user_quizz_id', 'id');
+    }
 
     public function getIncrementing()
     {

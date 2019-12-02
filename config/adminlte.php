@@ -136,7 +136,7 @@ return [
 
     'dashboard_url' => '/quizz',
 
-    'logout_url' => 'logout',
+    'logout_url' => '/logout',
 
     'login_url' => 'login',
 
@@ -180,14 +180,14 @@ return [
             'icon' => 'fa fa-file-alt'
         ],
         [
-            'text' => 'Mes Quizz',
-            'route'  => 'activeQuizz',
-            'icon' => 'fa fa-tasks'
+        'text' => 'Mes Quizz',
+        'route'  => 'activeQuizz',
+        'icon' => 'fa fa-tasks'
         ],
         [
-            'text' => 'Quizz Archivés',
-            'route'  => 'archiveQuizz',
-            'icon' => 'fa fa-folder-open'
+            'text' => 'Mes Amis',
+            'route'  => 'friend',
+            'icon' => 'fa fa-users'
         ],
     ],
 
