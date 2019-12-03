@@ -110,6 +110,7 @@ class QuizzController extends Controller
                 $note += $scores[$question->id];
             }
         }
+        $note =
 
         $userQuizz->note = $note;
         $iterations->note = $note;
