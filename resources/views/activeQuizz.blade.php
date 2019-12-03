@@ -14,6 +14,10 @@
         @include('components.card_custom', ['quizz' => $quizz['quizz'], 'iterations' => $quizz['iterations'], 'nbIterations' => $quizz['nbIterations'], 'user_quizz' => $quizz['user_quizz']])
     @endforeach
 @stop
+@if(isset($modalClass))
+    <button type="button" id="modal-trigger" style="display: none" class="{{$modalClass}}"></button>
+@endif
+
 
 @section('js')
     <script>
@@ -26,5 +30,30 @@
             $('.quizz').show();
             $('#showAll').hide()
         })
+
+        $(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+            });
+            $('.swalDefaultSuccess').click(function() {
+                Toast.fire({
+                    type: 'success',
+                    title: 'Quizz validé. Félicitations !'
+                })
+            });
+            $('.swalDefaultError').click(function() {
+                Toast.fire({
+                    type: 'error',
+                    title: 'Votre résultat ne permet pas de valider ce quizz. N\'hésitez pas à demander conseil auprès de vos amis.'
+                })
+            });
+        });
+
+        jQuery(function(){
+            jQuery('#modal-trigger').click();
+        });
     </script>
 @endsection

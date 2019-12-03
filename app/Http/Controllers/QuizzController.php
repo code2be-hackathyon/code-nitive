@@ -30,7 +30,9 @@ class QuizzController extends Controller
             usort($user_quizzs, function($a,$b){
                 return $a['user_quizz']->note - $b['user_quizz']->note ;
             });
-            return view('activeQuizz', ['quizzs' => $user_quizzs]);
+            $modalClass = session()->get('modalClass');
+            session()->remove('modalClass');
+            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass]);
         }
         return redirect(route('loginView'));
     }
@@ -86,42 +88,45 @@ class QuizzController extends Controller
     public function validateResponses($id, Request $request)
     {
         $quizz = Quizz::where('id',$id)->first();
-        $questions = $quizz->questions();
         $response = $request->post();
-        $scores = [];
-        $note = 0;
+        $modalClass = 'swalDefaultError';
+        $user_quizz_exists = UserQuizz::where('user_id',Auth::user()->id)->where('quizz_id',$quizz->id)->first();
 
-        $userQuizz = new UserQuizz();
-        $userQuizz->user_id = Auth::user()->id;
-        $userQuizz->quizz_id = $quizz->id;
-        $userQuizz->save();
-
-        $iterations = new Iteration();
-        $iterations->user_quizz_id = $userQuizz->id;
-        $iterations->order = 1;
-        $iterations->date = date('Y-m-d H:i:s');
-        $iterations->save();
-
-        foreach ($questions as $question) {
-            $answer = new Answer();
-            $answer->user_id = Auth::user()->id;
-            $answer->question_id = $question->id;
-            $answer->userResponse = json_encode($response[$question->id]);
-            $answer->save();
-
-            $scores[$question->id] = $question->value;
-
-            if (json_decode($answer->userResponse) == $question->correctResponses()){
-                $note += $scores[$question->id];
-            }
+        if (!$user_quizz_exists){
+            $userQuizz = new UserQuizz();
+            $userQuizz->user_id = Auth::user()->id;
+            $userQuizz->quizz_id = $quizz->id;
+            $userQuizz->save();
         }
-        $note =
 
-        $userQuizz->note = $note;
-        $iterations->note = $note;
-        $userQuizz->save();
-        $iterations->save();
+        $note = $quizz->score($response);
 
-        return view('validateQuizz', ['quizz'=>$quizz,'note'=>$note]);
+        if ($note > $quizz->validationNote){
+            $iterations = new Iteration();
+            if(!$user_quizz_exists){
+                $iterations->user_quizz_id = $userQuizz->id;
+            }
+            else {
+                $iterations->user_quizz_id = $user_quizz_exists->id;
+            }
+            $iterations->order = 1;
+            $iterations->date = date('Y-m-d H:i:s');
+            $iterations->note = $note;
+            $iterations->save();
+            $modalClass = 'swalDefaultSuccess';
+        }
+
+        if ($user_quizz_exists){
+            $user_quizz_exists->note = $note;
+            $user_quizz_exists->save();
+        }
+        else{
+            $userQuizz->note = $note;
+            $userQuizz->save();
+        }
+
+        session()->put(['modalClass'=>$modalClass]);
+
+        return redirect(route('activeQuizz'));
     }
 }
