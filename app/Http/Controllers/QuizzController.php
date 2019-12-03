@@ -19,15 +19,20 @@ class QuizzController extends Controller
             $quizzs = Quizz::all();
             return view('homeQuizz', ['quizzs'=> $quizzs]);
         }
-        return view('auth.login');
+        return redirect(route('loginView'));
     }
 
     public function activeQuizz()
     {
         if (Auth::check()){
-            return view('activeQuizz');
+            $user = Auth::user();
+            $user_quizzs = $user->user_quizz();
+            usort($user_quizzs, function($a,$b){
+                return $a['user_quizz']->note - $b['user_quizz']->note ;
+            });
+            return view('activeQuizz', ['quizzs' => $user_quizzs]);
         }
-        return view('auth.login');
+        return redirect(route('loginView'));
     }
 
     public function archiveQuizz()
@@ -35,7 +40,7 @@ class QuizzController extends Controller
         if (Auth::check()){
             return view('archiveQuizz');
         }
-        return view('auth.login');
+        return redirect(route('loginView'));
     }
 
     // permet d'afficher la partie 'admin' pour la demo

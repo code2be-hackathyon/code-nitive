@@ -29,6 +29,16 @@ class User extends Authenticatable
         return 'string';
     }
 
+    public function user_quizz() {
+        $user_quizzs_not_analyzed = UserQuizz::where('user_id', '=', $this->id)->get();
+        $user_quizzs = [];
+        foreach($user_quizzs_not_analyzed as $user_quizz){
+            $iterations = $user_quizz->iterations;
+            $user_quizzs[] = ["user_quizz" => $user_quizz, "quizz" => $user_quizz->quizz, "iterations" => $iterations, "nbIterations" => count($iterations)];
+        }
+        return $user_quizzs;
+    }
+
     public function save(array $options = [])
     {
         if (is_null($this->id)){
