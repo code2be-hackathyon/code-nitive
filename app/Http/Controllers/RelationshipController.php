@@ -49,7 +49,7 @@ class RelationshipController
         $friendEmail = $request->post()['email'];
         $user_check = User::where('email', '=', $request['email'])->first();
         if ($user_check === null) {
-            session()->put('error_message', 'Cette adresse e-mail n\'existe pas');
+            session()->put(['email_unavailable'=>true]);
             return redirect(route('friends'));
         }
         $receiver_id = User::where('email',$friendEmail)->first()->id;
@@ -58,12 +58,14 @@ class RelationshipController
         $relationship->receiver_id = $receiver_id;
         $relationship->confirm = 0;
         $relationship->save();
+        session()->put(['email_available'=>true]);
         return redirect(route('friends'));
     }
 
     public function responseFriendAsk(Request $request)
     {
         $relationship = Relationship::where('id','=',$request['relationship_id'])->first();
+        var_dump($relationship);
         if (isset($request['accept'])){
             $relationship->confirm = 1;
             $relationship->save();
