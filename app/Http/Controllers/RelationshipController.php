@@ -64,6 +64,7 @@ class RelationshipController
             session()->put(['email_available'=>true]);
             return redirect(route('friends'));
         }else{
+            session()->put(['already_friend'=>true]);
             return redirect(route('friends'));
         }
     }
