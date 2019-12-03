@@ -5,7 +5,7 @@
                 @if($user_quizz->note >= $quizz->validationNote)
                     <i class="far fa-grin-stars" style="margin-right: 7px;color:#27ae60"></i>
                 @elseif($user_quizz->note >= $quizz->limitNote)
-                    <i class="fas fa-meh" style="margin-right: 7px;color:#d35400"></i>
+                    <i class="far fa-meh" style="margin-right: 7px;color:#d35400"></i>
                 @else
                     <i class="far fa-frown" style="margin-right: 7px; color:#e74c3c" ></i>
                 @endif
