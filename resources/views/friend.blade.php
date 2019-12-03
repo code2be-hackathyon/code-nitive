@@ -12,12 +12,12 @@
                 <form role="form" method="post" action="{{@route('addFriend')}}">
                     {{csrf_field()}}
                     <div class="card-body">
-                        <div class="form-group" style="display: grid; grid-template-columns: repeat(3, 1fr); grid-gap: 10px;">
-                            <div style="grid-column: 1/3; grid-row: 1;">
+                        <div class="form-group" style="display: grid; grid-template-columns: repeat(6, 1fr); grid-gap: 10px;">
+                            <div style="grid-column: 1/6; grid-row: 1;">
                                 <input type="email" class="form-control" name="email" placeholder="Entrer l'email d'un ami">
                             </div>
-                            <div style="grid-column: 3/3; grid-row: 1">
-                                <button type="submit" class="btn btn-block btn-outline-primary">Ajouter</button>
+                            <div style="grid-column: 6/6; grid-row: 1">
+                                <button type="submit" class="btn btn-block btn-outline-primary"><i class="fas fa-user-plus"></i></button>
                             </div>
                         </div>
                     </div>
