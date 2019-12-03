@@ -123,6 +123,10 @@ class QuizzController extends Controller
                 $modalClass = 'swalDefaultSuccess';
             }
 
+            if ($note <= $quizz->validationNote){
+                session()->put(['first_iteration'=>true]);
+            }
+
             if ($user_quizz_exists){
                 $user_quizz_exists->note = $note;
                 $user_quizz_exists->save();
