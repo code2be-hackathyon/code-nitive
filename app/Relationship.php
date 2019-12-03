@@ -5,6 +5,7 @@ namespace App;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Relationship extends Model
 {
@@ -16,16 +17,19 @@ class Relationship extends Model
 
     public function sender()
     {
-        return $this->belongsToMany(User::class,'sender_id')->get();
+        return $this->belongsTo(User::class,'sender_id')->first();
     }
 
     public function receiver()
     {
-        return $this->belongsToMany(User::class,'receiver_id')->get();
+        return $this->belongsTo(User::class,'receiver_id')->first();
     }
 
-    public function friends()
+    public function save(array $options = [])
     {
-        return User::where('id',$this->receiver()->id)->where('confirm',1)->get();
+        if (is_null($this->id)){
+            $this->id = Str::random(32);
+        }
+        parent::save($options);
     }
 }
