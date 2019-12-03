@@ -17,7 +17,16 @@ class QuizzController extends Controller
     {
         if (Auth::check()){
             $quizzs = Quizz::all();
-            return view('homeQuizz', ['quizzs'=> $quizzs]);
+            $users_quizzs = Auth::user()->user_quizz();
+            $homeQuizzs = [];
+            foreach ($quizzs as $quizz){
+                foreach ($users_quizzs as $users_quizz){
+                    if ($users_quizz['quizz']->id != $quizz->id){
+                        $homeQuizzs[] = $quizz;
+                    }
+                }
+            }
+            return view('homeQuizz', ['quizzs'=> $homeQuizzs]);
         }
         return redirect(route('loginView'));
     }
@@ -101,7 +110,7 @@ class QuizzController extends Controller
 
         $note = $quizz->score($response);
 
-        if ($note > $quizz->validationNote){
+        if ($note >= $quizz->validationNote){
             $iterations = new Iteration();
             if(!$user_quizz_exists){
                 $iterations->user_quizz_id = $userQuizz->id;

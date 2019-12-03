@@ -39,6 +39,7 @@ class User extends Authenticatable
         return $user_quizzs;
     }
 
+
     public function save(array $options = [])
     {
         if (is_null($this->id)){

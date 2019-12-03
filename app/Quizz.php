@@ -74,8 +74,8 @@ class Quizz extends Model
             if (json_decode($answer->userResponse) == $question->correctResponses()){
                 $note += $scores[$question->id];
             }
-            $note = ($note/$total)*20; // note to /20 points
         }
+        $note = ($note/$total)*20; // note to /20 points
         return $note;
     }
 }
