@@ -65,10 +65,10 @@ class LoginController extends Controller
 
     public function logout()
     {
-        $datas = [];
         if (Auth::check()){
+            session()->put('message', 'Vous vous êtes déconnecté');
             Auth::logout();
         }
-        return view('auth.login', $datas);
+        return redirect(route('loginView'));
     }
 }
