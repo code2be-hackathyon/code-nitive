@@ -186,7 +186,7 @@ return [
         ],
         [
             'text' => 'Mes Amis',
-            'route'  => 'friend',
+            'route'  => 'friends',
             'icon' => 'fa fa-users'
         ],
     ],
