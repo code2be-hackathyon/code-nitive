@@ -15,6 +15,17 @@ class Relationship extends Model
 
     public $timestamps = false;
 
+    public function getIncrementing()
+    {
+        return false;
+    }
+
+    public function getKeyType()
+    {
+        return 'string';
+    }
+
+
     public function sender()
     {
         return $this->belongsTo(User::class,'sender_id')->first();

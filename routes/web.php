@@ -39,3 +39,5 @@ Route::post('/quizz/{id}/validate','QuizzController@validateResponses')->name('v
 Route::get('/friends','RelationshipController@friends')->name('friends');
 
 Route::post('/friends/add','RelationshipController@addFriend')->name('addFriend');
+
+Route::post('/friends/response','RelationshipController@responseFriendAsk')->name('responseFriendAsk');
