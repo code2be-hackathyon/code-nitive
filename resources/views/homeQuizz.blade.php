@@ -8,23 +8,15 @@
             <h1>Quizz</h1>
             <p>Trouvez un quizz qui vous intéresse !</p>
         </div>
-        <div class="col-md-2" style="text-align: right">
-            <button class="btn btn-outline-dark btn-sm" id="showAll" style="display: none; cursor: pointer;"><i class="far fa-eye" style="padding-right: 5px"></i>Montrer tout</button>
+    </div>
+    <div class="row" style="padding:0 7px">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Ajoutez vos filtres: francais maths ..." id="searchFilter" style="border-radius: 0">
+            <div class="input-group-append" id="btnDeleteFilter" style="display: none">
+                <button type="button" class="btn btn-danger btn-flat"><i class="fas fa-trash"></i></button>
+            </div>
         </div>
     </div>
-        <div class="card">
-            <div class="card-header border-0">
-                <div class="d-flex justify-content-between">
-                    <h3 class="card-title">Filtres de recherche</h3>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Ajoutez vos #...</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="#français #maths #...">
-                </div>
-            </div>
-        </div>
     @foreach($quizzs as $quizz)
         @include('components.card', ['quizz' => $quizz])
     @endforeach
@@ -32,14 +24,46 @@
 
 @section('js')
     <script>
-        $('.tagFilter').click(function (e) {
-            $('.quizz').hide();
-            $('.'+e.target.innerHTML.trim().substr(1)).show()
-            $('#showAll').show()
-        })
-        $('#showAll').click(function (e) {
+        var classes = [];
+        @foreach($quizzs as $quizz)
+            @foreach($quizz->tags() as $tag)
+                classes.push('{{$tag}}'.substr(1))
+            @endforeach
+        @endforeach
+        $('#searchFilter').on('input', function(e){
+            var input = $(this);
+            var val = input.val();
+            var words = val.split(' ');
+            if(words[0] === ""){
+                $('.quizz').show();
+                $('#showAll').hide()
+                $('#btnDeleteFilter').hide()
+            }else{
+                $('.quizz').hide();
+                $('#btnDeleteFilter').show()
+                words.forEach(function(elem){
+                    classes.forEach(function(classe){
+                        if(classe.startsWith(elem)){
+                            $('.'+classe).show()
+                        }
+                    });
+                })
+            }
+        });
+
+        $('#btnDeleteFilter').click(function(e){
             $('.quizz').show();
-            $('#showAll').hide()
+            $('#showAll').hide();
+            $("#searchFilter").val('')
+            $('#btnDeleteFilter').hide();
+        })
+        $('.tagFilter').click(function (e) {
+            var tag = e.target.innerHTML.trim().substr(1);
+            var inputText = $('#searchFilter').val();
+            if(inputText !== ''){
+                inputText += " ";
+            }
+            $('#searchFilter').val(inputText+tag);
         })
     </script>
 @endsection
