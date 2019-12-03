@@ -180,9 +180,9 @@ return [
             'icon' => 'fa fa-file-alt'
         ],
         [
-        'text' => 'Mes Quizz',
-        'route'  => 'activeQuizz',
-        'icon' => 'fa fa-tasks'
+            'text' => 'Mes Quizz',
+            'route'  => 'activeQuizz',
+            'icon' => 'fa fa-tasks'
         ],
         [
             'text' => 'Mes Amis',
