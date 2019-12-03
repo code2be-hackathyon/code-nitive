@@ -53,6 +53,9 @@ class RelationshipController
             return redirect(route('friends'));
         }
         $receiver_id = User::where('email',$friendEmail)->first()->id;
+        if($receiver_id === Auth::user()->id){
+            return redirect(route('friends'));
+        }
         $relationship_check = Relationship::where('sender_id', '=', $receiver_id)->where('receiver_id', '=', Auth::user()->id)->first();
         $relationship_check_1 = Relationship::where('receiver_id', '=', $receiver_id)->where('sender_id', '=', Auth::user()->id)->first();
         if(is_null($relationship_check) && is_null($relationship_check_1)){
