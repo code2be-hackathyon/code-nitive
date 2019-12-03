@@ -35,14 +35,18 @@
                                 <tr>
                                     <td>{{$askFriend->sender()->email}}</td>
                                     <td class="project-actions text-right" style="align-items: center">
-                                        <a class="btn btn-success btn-sm" href="#">
-                                            <i class="fas fa-check">
-                                            </i>
-                                        </a>
-                                        <a class="btn btn-danger btn-sm" href="#">
-                                            <i class="fas fa-trash">
-                                            </i>
-                                        </a>
+                                        <form role="form" method="post" action="{{@route('responseFriendAsk')}}">
+                                            {{csrf_field()}}
+                                            <input type="hidden" name="relationship_id" value="{{$askFriend->id}}">
+                                            <button name="accept" class="btn btn-success btn-sm" >
+                                                <i class="fas fa-check">
+                                                </i>
+                                            </button>
+                                            <button name="decline" class="btn btn-danger btn-sm" >
+                                                <i class="fas fa-trash">
+                                                </i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

@@ -61,4 +61,17 @@ class RelationshipController
         return redirect(route('friends'));
     }
 
+    public function responseFriendAsk(Request $request)
+    {
+        $relationship = Relationship::where('id','=',$request['relationship_id'])->first();
+        if (isset($request['accept'])){
+            $relationship->confirm = 1;
+            $relationship->save();
+        }
+        else {
+            $relationship->delete();
+        }
+        return redirect(route('friends'));
+    }
+
 }
