@@ -8,6 +8,7 @@
     <div style="display: inline-flex; width: 100%;">
         <div style="width: 90%;">
             <h1>Quizz</h1>
+            <p>Trouvez un quizz qui vous intéresse !</p>
         </div>
         <label class="btn btn-xs btn-primary" id="showAll" style="display: none; cursor: pointer;">Montrer tout</label>
     </div>
