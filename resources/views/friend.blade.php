@@ -93,7 +93,11 @@
                                     <td>{{$friend->sender()->email}}</td>
                                     <td>{{$friend->sender()->firstname}}</td>
                                     <td>{{$friend->sender()->lastname}}</td>
-                                    <td>{{$friend->confirm}}</td>
+                                    @if($friend->confirm)
+                                        <span class="badge badge-success">Amis</span>
+                                    @else
+                                        <span class="badge badge-warning">En attente</span>
+                                    @endif
                                 </tr>
                             @endif
                             @endforeach
