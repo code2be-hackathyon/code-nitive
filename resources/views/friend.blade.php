@@ -25,7 +25,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Demandes d'amis en attentes</h3>
+                    <h3 class="card-title">Demandes d'amis reçues</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
@@ -75,11 +75,12 @@
                         <tbody>
                         @foreach($friends as $friend)
                             @if($friend->sender()->id == \Illuminate\Support\Facades\Auth::user()->id)
-                            <tr>
-                                <td>{{$friend->receiver()->email}}</td>
-                                <td>{{$friend->receiver()->firstname}}</td>
-                                <td>{{$friend->receiver()->lastname}}</td>
-                                <td>@if($friend->confirm == 1)
+                                <tr>
+                                    <td>{{$friend->receiver()->email}}</td>
+                                    <td>{{$friend->receiver()->firstname}}</td>
+                                    <td>{{$friend->receiver()->lastname}}</td>
+                                    <td>
+                                    @if($friend->confirm)
                                         <span class="badge badge-success">Amis</span>
                                     @else
                                         <span class="badge badge-warning">En attente</span>
@@ -103,5 +104,42 @@
 
         </div>
     </div>
-
+@if(session()->get('email_unavailable'))
+    @php(session()->remove('email_unavailable'))
+    <button type="button" id="modal-trigger" style="display: none" class="swalEmailError"></button>
+@endif
+@if(session()->get('email_available'))
+    @php(session()->remove('email_available'))
+    <button type="button" id="modal-trigger" style="display: none" class="swalEmailSuccess"></button>
+@endif
 @stop
+
+
+@section('js')
+    <script>
+        $(function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 10000
+            });
+            $('.swalEmailError').click(function() {
+                Toast.fire({
+                    type: 'error',
+                    title: 'L\'email saisie n\est pas valide.'
+                })
+            });
+            $('.swalEmailSuccess').click(function() {
+                Toast.fire({
+                    type: 'success',
+                    title: 'Une invitation à bien été envoyée.'
+                })
+            });
+        });
+
+        jQuery(function(){
+            jQuery('#modal-trigger').click();
+        });
+    </script>
+@endsection
