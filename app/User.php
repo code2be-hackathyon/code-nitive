@@ -39,6 +39,18 @@ class User extends Authenticatable
         return $user_quizzs;
     }
 
+    public function isQuizzAtUser($id)
+    {
+        $quizz = Quizz::where('id',$id)->first();
+        $user_quizzs = $this->user_quizz();
+        foreach ($user_quizzs as $user_quizz) {
+            if ($user_quizz['quizz']->id == $quizz->id){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public function save(array $options = [])
     {

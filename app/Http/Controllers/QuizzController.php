@@ -17,13 +17,10 @@ class QuizzController extends Controller
     {
         if (Auth::check()){
             $quizzs = Quizz::all();
-            $users_quizzs = Auth::user()->user_quizz();
             $homeQuizzs = [];
             foreach ($quizzs as $quizz){
-                foreach ($users_quizzs as $users_quizz){
-                    if ($users_quizz['quizz']->id != $quizz->id){
-                        $homeQuizzs[] = $quizz;
-                    }
+                if (Auth::user()->isQuizzAtUser($quizz->id)) {
+                    $homeQuizzs[] = $quizz;
                 }
             }
             return view('homeQuizz', ['quizzs'=> $homeQuizzs]);
