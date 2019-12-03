@@ -53,19 +53,24 @@ class RelationshipController
             return redirect(route('friends'));
         }
         $receiver_id = User::where('email',$friendEmail)->first()->id;
-        $relationship = new Relationship();
-        $relationship->sender_id = Auth::user()->id;
-        $relationship->receiver_id = $receiver_id;
-        $relationship->confirm = 0;
-        $relationship->save();
-        session()->put(['email_available'=>true]);
-        return redirect(route('friends'));
+        $relationship_check = Relationship::where('sender_id', '=', $receiver_id)->where('receiver_id', '=', Auth::user()->id)->first();
+        $relationship_check_1 = Relationship::where('receiver_id', '=', $receiver_id)->where('sender_id', '=', Auth::user()->id)->first();
+        if(is_null($relationship_check) && is_null($relationship_check_1)){
+            $relationship = new Relationship();
+            $relationship->sender_id = Auth::user()->id;
+            $relationship->receiver_id = $receiver_id;
+            $relationship->confirm = 0;
+            $relationship->save();
+            session()->put(['email_available'=>true]);
+            return redirect(route('friends'));
+        }else{
+            return redirect(route('friends'));
+        }
     }
 
     public function responseFriendAsk(Request $request)
     {
         $relationship = Relationship::where('id','=',$request['relationship_id'])->first();
-        var_dump($relationship);
         if (isset($request['accept'])){
             $relationship->confirm = 1;
             $relationship->save();
