@@ -33,6 +33,10 @@
         $('#searchFilter').on('input', function(e){
             var input = $(this);
             var val = input.val();
+            changeFilter(val);
+        });
+
+        function changeFilter(val){
             var words = val.split(' ');
             if(words[0] === ""){
                 $('.quizz').show();
@@ -49,7 +53,7 @@
                     });
                 })
             }
-        });
+        }
 
         $('#btnDeleteFilter').click(function(e){
             $('.quizz').show();
@@ -64,6 +68,7 @@
                 inputText += " ";
             }
             $('#searchFilter').val(inputText+tag);
+            changeFilter(inputText+tag)
         })
     </script>
 @endsection

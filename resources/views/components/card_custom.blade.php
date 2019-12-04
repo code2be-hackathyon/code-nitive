@@ -31,7 +31,7 @@
                 <form action="/quizz/{{$quizz->id}}">
                     @if($user_quizz->note <= $quizz->limitNote OR session()->get('first_iteration'))
                         @php(session()->remove('first_iteration'))
-                    <button type="submit" class="btn btn-primary btn-sm">Commencer <i class="fas fa-chevron-right" style="margin-left: 5px"></i></button>
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-play"></i></button>
                     @endif
                 </form>
             </div>
