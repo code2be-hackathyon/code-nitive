@@ -118,9 +118,9 @@
     @php(session()->remove('email_available'))
     <button type="button" id="modal-trigger" style="display: none" class="swalEmailSuccess"></button>
 @endif
-@if(session()->get('already_friend'))
-    @php(session()->remove('already_friend'))
-    <button type="button" id="modal-trigger" style="display: none" class="swalEmailExist"></button>
+@if(session()->get('self_friend'))
+    @php(session()->remove('self_friend'))
+    <button type="button" id="modal-trigger" style="display: none" class="swalSelfFriend"></button>
 @endif
 @stop
 
@@ -150,6 +150,12 @@
                 Toast.fire({
                     type: 'info',
                     title: 'Vous avez déjà cet ami.'
+                })
+            });
+            $('.swalSelfFriend').click(function() {
+                Toast.fire({
+                    type: 'info',
+                    title: 'Cette adresse est la vôtre...'
                 })
             });
         });
