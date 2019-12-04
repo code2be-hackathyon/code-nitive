@@ -72,7 +72,7 @@ class QuizzController extends Controller
 
             $newNote = $note;
 
-            if($nbIterations <= 2){
+            if($nbIterations <= 3){
                 $newNote = $note - $decrementing[$nbIterations];
             }
             $newNote = ($newNote < 0) ? 0 : $newNote;
