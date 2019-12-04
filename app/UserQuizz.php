@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 class UserQuizz extends Model
 {
     protected $table = "user_quizz";
-    protected $fillable = ['user_id', 'quizz_id', 'note'];
+    protected $fillable = ['id','user_id', 'quizz_id', 'note'];
     public $timestamps = false;
 
     public function user()

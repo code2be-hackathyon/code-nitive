@@ -85,7 +85,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        if(empty($request['name'])|| empty($request['email']) || empty($request['password']) || empty($request['password_confirmation'])){
+        if(empty($request['name']) || empty($request['firstname']) || empty($request['email']) || empty($request['password']) || empty($request['password_confirmation'])){
             session()->put('error_message', 'Veuillez remplir tous les champs');
             return redirect(route('register'));
         }
@@ -99,8 +99,8 @@ class RegisterController extends Controller
             return redirect(route('register'));
         }
         $user = new User();
-        $user->firstname = $request['name'];
-        $user->lastname = null;
+        $user->firstname = $request['firstname'];
+        $user->lastname = $request['name'];
         $user->email = $request['email'];
         $user->password = encrypt($request['password']);
         $user->save();

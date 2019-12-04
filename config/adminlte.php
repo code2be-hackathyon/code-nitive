@@ -180,13 +180,13 @@ return [
             'icon' => 'fa fa-file-alt'
         ],
         [
-        'text' => 'Mes Quizz',
-        'route'  => 'activeQuizz',
-        'icon' => 'fa fa-tasks'
+            'text' => 'Mes Quizz',
+            'route'  => 'activeQuizz',
+            'icon' => 'fa fa-tasks'
         ],
         [
             'text' => 'Mes Amis',
-            'route'  => 'friend',
+            'route'  => 'friends',
             'icon' => 'fa fa-users'
         ],
     ],
@@ -271,7 +271,7 @@ return [
         ],
         [
             'name' => 'Sweetalert2',
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

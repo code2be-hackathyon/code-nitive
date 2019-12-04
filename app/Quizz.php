@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class Quizz extends Model
@@ -51,5 +52,30 @@ class Quizz extends Model
             $title = str_replace($tag,'',$title);
         }
         return $title;
+    }
+
+    public function score($response)
+    {
+        $questions = $this->questions();
+        $scores = [];
+        $note = 0;
+        $total = 0;
+
+        foreach ($questions as $question) {
+            $answer = new Answer();
+            $answer->user_id = Auth::user()->id;
+            $answer->question_id = $question->id;
+            $answer->userResponse = json_encode($response[$question->id]);
+            $answer->save();
+
+            $scores[$question->id] = $question->value;
+            $total += $question->value;
+
+            if (json_decode($answer->userResponse) == $question->correctResponses()){
+                $note += $scores[$question->id];
+            }
+        }
+        $note = ($note/$total)*20; // note to /20 points
+        return $note;
     }
 }
