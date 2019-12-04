@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -51,6 +52,36 @@ class User extends Authenticatable
         return true;
     }
 
+    public function relationships()
+    {
+        $friendsSender = Relationship::where('sender_id', '=',$this->id)->where('confirm','=',1)->get();
+        $friendsReceiver = Relationship::where('receiver_id', '=',$this->id)->where('confirm','=',1)->get();
+        $friends = [];
+        if ($friendsReceiver and $friendsSender !== null){
+            foreach ($friendsSender as $friendSender){
+                $friends[] = $friendSender;
+            }
+            foreach ($friendsReceiver as $friendReceiver){
+                $friends[] = $friendReceiver;
+            }
+        }
+        return $friends;
+    }
+
+    public function friends()
+    {
+        $relationships = $this->relationships();
+        $friends = [];
+        foreach ($relationships as $relationship) {
+            if ($this->id == $relationship->sender_id){
+                $friends[] = User::where('id',$relationship->receiver_id)->first();
+            }
+            else{
+                $friends[] = User::where('id',$relationship->sender_id)->first();
+            }
+        }
+        return $friends;
+    }
 
     public function save(array $options = [])
     {
