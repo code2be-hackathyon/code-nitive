@@ -11,6 +11,14 @@
                 <h5>Cette application suit une étude sur l'apprentissage par répétitions.</h5>
                 <h5>Chaque quizz que vous allez réaliser devra être validé 4 fois.</h5>
                 <h5>Pour validé votre quizz, il faudra atteindre une note minimale.</h5>
+                <div class="row">
+                    <div class="col-md-3">
+
+                    </div>
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
                 <h5>Quizz a refaire <i class="far fa-sad-tear" style="margin-right: 7px; color:#e74c3c" ></i></h5>
                 <h5>Quizz bientôt à refaire <i class="far fa-meh-rolling-eyes" style="margin-right: 7px;color:#d35400"></i></h5>
                 <h5>Quizz validé <i class="far fa-grin-stars" style="margin-right: 7px;color:#27ae60"></i></h5>
