@@ -97,18 +97,19 @@ class QuizzController extends Controller
             $quizz = Quizz::where('id',$id)->first();
             $response = $request->post();
             $modalClass = 'swalDefaultError';
-            $user_quizz_exists = UserQuizz::where('user_id',Auth::user()->id)->where('quizz_id',$quizz->id)->first();
 
-            if (!$user_quizz_exists){
-                $userQuizz = new UserQuizz();
-                $userQuizz->user_id = Auth::user()->id;
-                $userQuizz->quizz_id = $quizz->id;
-                $userQuizz->save();
-            }
 
-            $note = $quizz->score($response);
+            $score = $quizz->score($response);
+            $note = $score['note'];
 
             if ($note >= $quizz->validationNote){
+                $user_quizz_exists = UserQuizz::where('user_id',Auth::user()->id)->where('quizz_id',$quizz->id)->first();
+                if (!$user_quizz_exists){
+                    $userQuizz = new UserQuizz();
+                    $userQuizz->user_id = Auth::user()->id;
+                    $userQuizz->quizz_id = $quizz->id;
+                    $userQuizz->save();
+                }
                 $iterations = new Iteration();
                 if(!$user_quizz_exists){
                     $iterations->user_quizz_id = $userQuizz->id;
@@ -121,19 +122,20 @@ class QuizzController extends Controller
                 $iterations->note = $note;
                 $iterations->save();
                 $modalClass = 'swalDefaultSuccess';
-            }
 
+                if ($user_quizz_exists){
+                    $user_quizz_exists->note = $note;
+                    $user_quizz_exists->save();
+                }
+                else{
+                    $userQuizz->note = $note;
+                    $userQuizz->save();
+                }
+            }
             if ($note <= $quizz->validationNote){
                 session()->put(['first_iteration'=>true]);
-            }
-
-            if ($user_quizz_exists){
-                $user_quizz_exists->note = $note;
-                $user_quizz_exists->save();
-            }
-            else{
-                $userQuizz->note = $note;
-                $userQuizz->save();
+                session()->put(['errors_quizz'=>$score['errors']]);
+                return redirect(route('questions',['id'=>$quizz->id]));
             }
 
             session()->put(['modalClass'=>$modalClass]);

@@ -32,7 +32,7 @@
                 </p>
             </div>
             <div class="col-2" style="text-align: right">
-                @if(!is_null($friends_quizzs))
+                @if(!empty($friends_quizzs))
                 <button class="btn btn-primary" data-toggle="modal" data-target="#modal-friends">AMIS</button>
                 @endif
                 <form action="/quizz/{{$quizz->id}}">
@@ -45,12 +45,12 @@
         </div>
     </div>
 </div>
-
+@if(!empty($friends_quizzs))
 <div class="modal fade" id="modal-friends">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Amis ayant participé</h4>
+                <h4 class="modal-title">Amis ayant participés</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -88,3 +88,4 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+@endif
