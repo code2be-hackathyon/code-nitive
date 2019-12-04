@@ -22,10 +22,26 @@
             <p class="login-box-msg">{{ __('adminlte::adminlte.register_message') }}</p>
             <form action="{{ url(config('adminlte.register_url', 'register')) }}" method="post">
                 {{ csrf_field() }}
+                <div class="input-group mb-3">
+                    <input type="text" name="firstname" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('firstname') }}"
+                           placeholder="Prénom">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
 
+                    @if ($errors->has('name'))
+                        <div class="invalid-feedback">
+                            <strong>{{ $errors->first('firstname') }}</strong>
+                            </span>
+
+                        </div>
+                    @endif
+                </div>
                 <div class="input-group mb-3">
                     <input type="text" name="name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" value="{{ old('name') }}"
-                           placeholder="{{ __('adminlte::adminlte.full_name') }}">
+                           placeholder="Nom">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-user"></span>
