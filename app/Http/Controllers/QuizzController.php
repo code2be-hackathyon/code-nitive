@@ -46,7 +46,7 @@ class QuizzController extends Controller
             });
             $modalClass = session()->get('modalClass');
             session()->remove('modalClass');
-            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass,'friends_quizzs'=>$friends_quizzs,'friends'=>$friends]);
+            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass,'friends_quizzs'=>$friends_quizzs]);
         }
         return redirect(route('loginView'));
     }
