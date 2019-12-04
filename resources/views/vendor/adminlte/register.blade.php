@@ -34,8 +34,6 @@
                     @if ($errors->has('name'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('firstname') }}</strong>
-                            </span>
-
                         </div>
                     @endif
                 </div>
@@ -51,7 +49,7 @@
                     @if ($errors->has('name'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('name') }}</strong>
-                        </span>
+                        </div>
                     @endif
                 </div>
                 <div class="input-group mb-3">
@@ -65,7 +63,7 @@
                     @if ($errors->has('email'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('email') }}</strong>
-                        </span>
+                        </div>
                     @endif
                 </div>
                 <div class="input-group mb-3">
@@ -79,7 +77,7 @@
                     @if ($errors->has('password'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('password') }}</strong>
-                        </span>
+                        </div>
                     @endif
                 </div>
                 <div class="input-group mb-3">
@@ -93,23 +91,40 @@
                     @if ($errors->has('password_confirmation'))
                         <div class="invalid-feedback">
                             <strong>{{ $errors->first('password_confirmation') }}</strong>
-                        </span>
+                        </div>
                     @endif
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-flat">
-                    {{ __('adminlte::adminlte.register') }}
-                </button>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <a href="{{ route('loginView') }}" class="btn btn-default btn-block btn-flat">
+                            Connexion
+                        </a>
+                    </div>
+                    <div class="col-sm-5">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">
+                            S'incrire
+                        </button>
+                    </div>
+                </div>
             </form>
-            <p class="mt-2 mb-1">
-                <a href="{{ url(config('adminlte.login_url', 'login')) }}">
-                    {{ __('adminlte::adminlte.i_already_have_a_membership') }}
-                </a>
-            </p>
         </div>
         <!-- /.form-box -->
     </div><!-- /.register-box -->
 @stop
-
+        @section('js')
+            <script src="three.js"></script>
+            <script src="vanta.js"></script>
+            <script>
+                VANTA.NET({
+                    el: "#bodyAnimate",
+                    color: 0x0,
+                    backgroundColor: 0xe9ecef,
+                    maxDistance: 25.00,
+                    spacing: 20.00
+                })
+                $('canvas').css('opacity', '0.1')
+            </script>
+        @stop
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
     @stack('js')

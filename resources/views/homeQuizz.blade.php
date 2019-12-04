@@ -70,5 +70,10 @@
             $('#searchFilter').val(inputText+tag);
             changeFilter(inputText+tag)
         })
+
+        @if(session()->exists('first_connection'))
+            @php(session()->remove('first_connection'))
+            $("#modal-welcome").modal();
+        @endif
     </script>
 @endsection

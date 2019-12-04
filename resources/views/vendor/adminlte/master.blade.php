@@ -26,6 +26,10 @@
 
 @yield('body')
 
+@if(session()->exists('first_connection'))
+    @component('components.welcome_modal')
+@endif
+
 @if(! config('adminlte.enabled_laravel_mix'))
 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -37,6 +41,5 @@
 @else
 <script src="{{ asset('js/app.js') }}"></script>
 @endif
-
 </body>
 </html>
