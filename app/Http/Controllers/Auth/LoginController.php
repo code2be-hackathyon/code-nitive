@@ -48,6 +48,8 @@ class LoginController extends Controller
         if ($user){
             if (decrypt($user->password) == $request['password']){
                 Auth::login($user);
+            }else{
+                session()->put('error_message', 'Identifiants invalides');
             }
         }else{
             session()->put('error_message', 'Identifiants invalides');
