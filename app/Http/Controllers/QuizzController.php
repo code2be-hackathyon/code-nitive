@@ -6,10 +6,13 @@ use App\Answer;
 use App\Iteration;
 use App\Question;
 use App\Quizz;
+use App\Relationship;
+use App\User;
 use App\UserQuizz;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\AUTH_ANY;
 
 class QuizzController extends Controller
 {
@@ -33,20 +36,17 @@ class QuizzController extends Controller
         if (Auth::check()){
             $user = Auth::user();
             $user_quizzs = $user->user_quizz();
+            $friends = Auth::user()->friends();
+            $friends_quizzs = [];
+            foreach ($friends as $friend) {
+                $friends_quizzs[] = $friend->user_quizz();
+            }
             usort($user_quizzs, function($a,$b){
                 return $a['user_quizz']->note - $b['user_quizz']->note ;
             });
             $modalClass = session()->get('modalClass');
             session()->remove('modalClass');
-            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass]);
-        }
-        return redirect(route('loginView'));
-    }
-
-    public function archiveQuizz()
-    {
-        if (Auth::check()){
-            return view('archiveQuizz');
+            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass,'friends_quizzs'=>$friends_quizzs]);
         }
         return redirect(route('loginView'));
     }

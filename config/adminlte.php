@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'ReflexYon',
-    'title_prefix' => '',
+    'title' => 'Reflex\'Yon',
+    'title_prefix' => 'Reflex\'Yon | ',
     'title_postfix' => '',
 
     /*
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Reflex</b>Yon',
+    'logo' => '<b>Reflex\'</b>Yon',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image-xl',
     'logo_img_xl' => null,
