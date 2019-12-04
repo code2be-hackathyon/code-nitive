@@ -26,12 +26,12 @@
     </div>
     <div class="card-body" style="display: none;">
         <div class="row">
-            <div class="col-10">
+            <div class="col-md-9">
                 <p class="card-text">
                     {{$quizz->overview}}
                 </p>
             </div>
-            <div class="col-2" style="text-align: right">
+            <div class="col-md-3" style="text-align: right">
                 @if(!empty($friends_quizzs))
                     <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-friends"><i class="fas fa-users"></i></button>
                 @endif
