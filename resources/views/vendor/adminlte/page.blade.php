@@ -96,7 +96,9 @@
                 <ul class="navbar-nav ml-auto @if(config('adminlte.layout_topnav') || View::getSection('layout_topnav'))order-1 order-md-3 navbar-no-expand @endif">
                     @yield('content_top_nav_right')
                     @if(Auth::user())
+                        <li class="nav-item"><a class="nav-link" data-toggle="modal" data-target="#modal-lg"><i class="far fa-question-circle"></i></a></li>
                         <li class="nav-item">
+
                             <a class="nav-link" href="#"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                             >
@@ -182,6 +184,8 @@
         @endif
 
     </div>
+    @component('components.welcome_modal')
+    @endcomponent
 @stop
 
 @section('adminlte_js')
