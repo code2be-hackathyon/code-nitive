@@ -39,7 +39,9 @@ class QuizzController extends Controller
             $friends = Auth::user()->friends();
             $friends_quizzs = [];
             foreach ($friends as $friend) {
-                $friends_quizzs[] = $friend->user_quizz();
+                if(!empty($friend->user_quizz())){
+                    $friends_quizzs[] = $friend->user_quizz();
+                }
             }
             usort($user_quizzs, function($a,$b){
                 return $a['user_quizz']->note - $b['user_quizz']->note ;
