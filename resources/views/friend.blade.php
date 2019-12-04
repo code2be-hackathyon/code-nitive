@@ -23,6 +23,7 @@
                     </div>
                 </form>
             </div>
+            @if(count($askFriends) > 0)
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Demandes d'amis reçues</h3>
@@ -54,6 +55,7 @@
                     </table>
                 </div>
             </div>
+            @endif
         </div>
 
         <div class="col-md-7">
@@ -62,50 +64,56 @@
                     <h3 class="card-title">Amis</h3>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body p-0">
-                    <table class="table">
-                        <thead>
+                @if(count($friends) > 0)
+                    <div class="card-body p-0">
+                        <table class="table">
+                            <thead>
                             <tr>
                                 <th>Adresse email</th>
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Statut</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($friends as $friend)
-                            @if($friend->sender()->id == \Illuminate\Support\Facades\Auth::user()->id)
-                                <tr>
-                                    <td>{{$friend->receiver()->email}}</td>
-                                    <td>{{$friend->receiver()->firstname}}</td>
-                                    <td>{{$friend->receiver()->lastname}}</td>
-                                    <td>
-                                    @if($friend->confirm)
-                                        <span class="badge badge-success">Amis</span>
-                                    @else
-                                        <span class="badge badge-warning">En attente</span>
-                                    @endif
-                                    </td>
-                                </tr>
-                            @endif
-                            @if($friend->receiver()->id == \Illuminate\Support\Facades\Auth::user()->id)
-                                <tr>
-                                    <td>{{$friend->sender()->email}}</td>
-                                    <td>{{$friend->sender()->firstname}}</td>
-                                    <td>{{$friend->sender()->lastname}}</td>
-                                    <td>
-                                    @if($friend->confirm)
-                                        <span class="badge badge-success">Amis</span>
-                                    @else
-                                        <span class="badge badge-warning">En attente</span>
-                                    @endif
-                                    </td>
-                                </tr>
-                            @endif
+                            </thead>
+                            <tbody>
+                            @foreach($friends as $friend)
+                                @if($friend->sender()->id == \Illuminate\Support\Facades\Auth::user()->id)
+                                    <tr>
+                                        <td>{{$friend->receiver()->email}}</td>
+                                        <td>{{$friend->receiver()->firstname}}</td>
+                                        <td>{{$friend->receiver()->lastname}}</td>
+                                        <td>
+                                            @if($friend->confirm)
+                                                <span class="badge badge-success">Amis</span>
+                                            @else
+                                                <span class="badge badge-warning">En attente</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
+                                @if($friend->receiver()->id == \Illuminate\Support\Facades\Auth::user()->id)
+                                    <tr>
+                                        <td>{{$friend->sender()->email}}</td>
+                                        <td>{{$friend->sender()->firstname}}</td>
+                                        <td>{{$friend->sender()->lastname}}</td>
+                                        <td>
+                                            @if($friend->confirm)
+                                                <span class="badge badge-success">Amis</span>
+                                            @else
+                                                <span class="badge badge-warning">En attente</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="card-body">
+                        Vous n'avez aucun ami. Ajoutez-en dès maintenant!
+                    </div>
+                @endif
             </div>
 
         </div>
