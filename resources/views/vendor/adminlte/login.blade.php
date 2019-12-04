@@ -41,9 +41,9 @@
                 <p>{{ $error_message }}</p>
             </div>
         @endif
-        <div class="card">
-            <div class="card-body login-card-body">
-                <p class="login-box-msg">{{ __('Se connecter à ReflexYon') }}</p>
+        <div class="card" style="border-radius: 5px">
+            <div class="card-body login-card-body" style="border-radius: 10px;box-shadow: 0px 6px 18px -9px rgba(0,0,0,0.75);">
+                <p class="login-box-msg">{{ __('Se connecter à Reflex\'Yon') }}</p>
                 <form action="{{ $login_url }}" method="post">
                     {{ csrf_field() }}
                     <div class="input-group mb-3">
@@ -73,36 +73,36 @@
                         @endif
                     </div>
                     <div class="row">
-                        <div class="col-7">
-                            <div class="icheck-primary">
-                                <input type="checkbox" name="remember" id="remember">
-                                <label for="remember">{{ __('Se rappeler de moi') }}</label>
-                            </div>
+                        <div class="col-sm-7">
+                            <a href="{{ $register_url }}" class="btn btn-default btn-block btn-flat">
+                                Inscription
+                            </a>
                         </div>
-                        <div class="col-5">
+                        <div class="col-sm-5">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">
-                                {{ __('Se connecter') }}
+                                Connexion
                             </button>
                         </div>
                     </div>
                 </form>
 
-                <!--<p class="mt-2 mb-1">
-                    <a href="{{ $password_reset_url }}">
-                        {{ __('J\'ai oublié mon mot de passe') }}
-                    </a>
-                </p>-->
-                @if ($register_url)
-                    <p class="mb-0">
-                        <a href="{{ $register_url }}">
-                            {{ __('S\'enregistrer en tant que nouveau membre') }}
-                        </a>
-                    </p>
-                @endif
-
             </div>
         </div>
     </div>
+@stop
+@section('js')
+    <script src="three.js"></script>
+    <script src="vanta.js"></script>
+    <script>
+        VANTA.NET({
+            el: "#bodyAnimate",
+            color: 0x0,
+            backgroundColor: 0xe9ecef,
+            maxDistance: 25.00,
+            spacing: 20.00
+        })
+        $('canvas').css('opacity', '0.1')
+    </script>
 @stop
 
 @section('adminlte_js')
