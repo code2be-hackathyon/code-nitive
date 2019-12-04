@@ -8,10 +8,14 @@
     <div class="card-body">
         <div class="form-group">
             @foreach($question->responses() as $response)
-            <div class="form-check">
+            <!--<div class="form-check">
                 <input class="form-check-input" type="checkbox" name="{{$question->id}}[]" value="{{$response}}">
                 <label class="form-check-label">{{$response}}</label>
-            </div>
+            </div>-->
+                <div class="form-check custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="{{$response}}" value="{{$response}}" name="{{$question->id}}[]">
+                    <label for="{{$response}}" class="custom-control-label">{{$response}}</label>
+                </div>
             @endforeach
         </div>
     </div>
