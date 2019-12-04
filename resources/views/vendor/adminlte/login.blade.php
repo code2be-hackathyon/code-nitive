@@ -35,6 +35,12 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
+        @if(isset($error_message))
+            <div class="callout callout-danger">
+                <h5>Oops !</h5>
+                <p>{{ $error_message }}</p>
+            </div>
+        @endif
         <div class="card">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">{{ __('Se connecter à ReflexYon') }}</p>

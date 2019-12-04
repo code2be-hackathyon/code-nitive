@@ -49,6 +49,8 @@ class LoginController extends Controller
             if (decrypt($user->password) == $request['password']){
                 Auth::login($user);
             }
+        }else{
+            session()->put('error_message', 'Identifiants invalides');
         }
         return redirect('/quizz');
     }
@@ -59,6 +61,10 @@ class LoginController extends Controller
         if(session()->exists('message')){
             $datas['message'] = session()->get('message');
             session()->remove('message');
+        }
+        if(session()->exists('error_message')){
+            $datas['error_message'] = session()->get('error_message');
+            session()->remove('error_message');
         }
         return view('auth.login', $datas);
     }
