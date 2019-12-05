@@ -105,6 +105,7 @@ class RegisterController extends Controller
         $user->password = encrypt($request['password']);
         $user->save();
         session()->put('message', 'Vous êtes inscrit ! Vous pouvez vous connecter');
+        session()->put('first_connection', true);
         return redirect(route('login'));
     }
 }

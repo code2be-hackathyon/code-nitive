@@ -57,25 +57,36 @@ class Quizz extends Model
     public function score($response)
     {
         $questions = $this->questions();
+        if((count($response)-1) != count($questions)){
+            return ['note'=>0,'errors'=>[]];
+        }
         $scores = [];
         $note = 0;
         $total = 0;
+        $errors =[];
 
         foreach ($questions as $question) {
-            $answer = new Answer();
-            $answer->user_id = Auth::user()->id;
-            $answer->question_id = $question->id;
-            $answer->userResponse = json_encode($response[$question->id]);
-            $answer->save();
+            if (isset($response[$question->id])){
+                $answer = new Answer();
+                $answer->user_id = Auth::user()->id;
+                $answer->question_id = $question->id;
+                $answer->userResponse = json_encode($response[$question->id]);
+                $answer->save();
 
-            $scores[$question->id] = $question->value;
-            $total += $question->value;
+                $scores[$question->id] = $question->value;
+                $total += $question->value;
 
-            if (json_decode($answer->userResponse) == $question->correctResponses()){
-                $note += $scores[$question->id];
+                if (json_decode($answer->userResponse) == $question->correctResponses()){
+                    $note += $scores[$question->id];
+                }
+                else{
+                    $errors[] = $question->id;
+                }
             }
         }
-        $note = ($note/$total)*20; // note to /20 points
-        return $note;
+        if ($total > 0){
+            $note = ($note/$total)*20; // note to /20 points
+        }
+        return ['note'=>$note,'errors'=>$errors];
     }
 }

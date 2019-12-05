@@ -9,6 +9,7 @@
             <p>Trouvez un quizz qui vous intéresse !</p>
         </div>
     </div>
+    @if(count($quizzs) > 0)
     <div class="row" style="padding:0 7px">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Ajoutez vos filtres: francais maths ..." id="searchFilter" style="border-radius: 0">
@@ -17,9 +18,12 @@
             </div>
         </div>
     </div>
-    @foreach($quizzs as $quizz)
+    @endif
+    @forelse($quizzs as $quizz)
         @include('components.card', ['quizz' => $quizz])
-    @endforeach
+    @empty
+        Bravo, vous avez fait tous les quizzs !
+    @endforelse
 @stop
 
 @section('js')
@@ -70,5 +74,10 @@
             $('#searchFilter').val(inputText+tag);
             changeFilter(inputText+tag)
         })
+
+        @if(session()->exists('first_connection'))
+            @php(session()->remove('first_connection'))
+            $("#modal-welcome").modal();
+        @endif
     </script>
 @endsection

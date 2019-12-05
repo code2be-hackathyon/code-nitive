@@ -6,10 +6,13 @@ use App\Answer;
 use App\Iteration;
 use App\Question;
 use App\Quizz;
+use App\Relationship;
+use App\User;
 use App\UserQuizz;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use const http\Client\Curl\AUTH_ANY;
 
 class QuizzController extends Controller
 {
@@ -33,20 +36,19 @@ class QuizzController extends Controller
         if (Auth::check()){
             $user = Auth::user();
             $user_quizzs = $user->user_quizz();
+            $friends = Auth::user()->friends();
+            $friends_quizzs = [];
+            foreach ($friends as $friend) {
+                if(!empty($friend->user_quizz())){
+                    $friends_quizzs[] = $friend->user_quizz();
+                }
+            }
             usort($user_quizzs, function($a,$b){
                 return $a['user_quizz']->note - $b['user_quizz']->note ;
             });
             $modalClass = session()->get('modalClass');
             session()->remove('modalClass');
-            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass]);
-        }
-        return redirect(route('loginView'));
-    }
-
-    public function archiveQuizz()
-    {
-        if (Auth::check()){
-            return view('archiveQuizz');
+            return view('activeQuizz', ['quizzs' => $user_quizzs,'modalClass'=>$modalClass,'friends_quizzs'=>$friends_quizzs]);
         }
         return redirect(route('loginView'));
     }
@@ -72,7 +74,7 @@ class QuizzController extends Controller
 
             $newNote = $note;
 
-            if($nbIterations <= 2){
+            if($nbIterations <= 3){
                 $newNote = $note - $decrementing[$nbIterations];
             }
             $newNote = ($newNote < 0) ? 0 : $newNote;
@@ -97,18 +99,19 @@ class QuizzController extends Controller
             $quizz = Quizz::where('id',$id)->first();
             $response = $request->post();
             $modalClass = 'swalDefaultError';
-            $user_quizz_exists = UserQuizz::where('user_id',Auth::user()->id)->where('quizz_id',$quizz->id)->first();
 
-            if (!$user_quizz_exists){
-                $userQuizz = new UserQuizz();
-                $userQuizz->user_id = Auth::user()->id;
-                $userQuizz->quizz_id = $quizz->id;
-                $userQuizz->save();
-            }
 
-            $note = $quizz->score($response);
+            $score = $quizz->score($response);
+            $note = $score['note'];
 
             if ($note >= $quizz->validationNote){
+                $user_quizz_exists = UserQuizz::where('user_id',Auth::user()->id)->where('quizz_id',$quizz->id)->first();
+                if (!$user_quizz_exists){
+                    $userQuizz = new UserQuizz();
+                    $userQuizz->user_id = Auth::user()->id;
+                    $userQuizz->quizz_id = $quizz->id;
+                    $userQuizz->save();
+                }
                 $iterations = new Iteration();
                 if(!$user_quizz_exists){
                     $iterations->user_quizz_id = $userQuizz->id;
@@ -121,19 +124,19 @@ class QuizzController extends Controller
                 $iterations->note = $note;
                 $iterations->save();
                 $modalClass = 'swalDefaultSuccess';
-            }
 
+                if ($user_quizz_exists){
+                    $user_quizz_exists->note = $note;
+                    $user_quizz_exists->save();
+                }
+                else{
+                    $userQuizz->note = $note;
+                    $userQuizz->save();
+                }
+            }
             if ($note <= $quizz->validationNote){
-                session()->put(['first_iteration'=>true]);
-            }
-
-            if ($user_quizz_exists){
-                $user_quizz_exists->note = $note;
-                $user_quizz_exists->save();
-            }
-            else{
-                $userQuizz->note = $note;
-                $userQuizz->save();
+                session()->put(['errors_quizz'=>$score['errors']]);
+                return redirect(route('questions',['id'=>$quizz->id]));
             }
 
             session()->put(['modalClass'=>$modalClass]);

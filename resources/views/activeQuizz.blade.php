@@ -9,6 +9,7 @@
             <p>Retrouvez sur cette page tous les quizz que vous avez répondu</p>
         </div>
     </div>
+    @if(count($quizzs) > 0)
     <div class="row" style="padding:0 7px">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Ajoutez vos filtres: francais maths ..." id="searchFilter" style="border-radius: 0">
@@ -17,9 +18,12 @@
             </div>
         </div>
     </div>
-    @foreach($quizzs as $quizz)
+    @endif
+    @forelse($quizzs as $quizz)
         @include('components.card_custom', ['quizz' => $quizz['quizz'], 'iterations' => $quizz['iterations'], 'nbIterations' => $quizz['nbIterations'], 'user_quizz' => $quizz['user_quizz']])
-    @endforeach
+    @empty
+        Vous n'avez fait aucun quizz !
+    @endforelse
 @stop
 @if(isset($modalClass))
     <button type="button" id="modal-trigger" style="display: none" class="{{$modalClass}}"></button>
