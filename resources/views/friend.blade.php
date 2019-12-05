@@ -69,7 +69,6 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Adresse email</th>
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Statut</th>
@@ -79,7 +78,6 @@
                             @foreach($friends as $friend)
                                 @if($friend->sender()->id == \Illuminate\Support\Facades\Auth::user()->id)
                                     <tr>
-                                        <td>{{$friend->receiver()->email}}</td>
                                         <td>{{$friend->receiver()->firstname}}</td>
                                         <td>{{$friend->receiver()->lastname}}</td>
                                         <td>
@@ -93,7 +91,6 @@
                                 @endif
                                 @if($friend->receiver()->id == \Illuminate\Support\Facades\Auth::user()->id)
                                     <tr>
-                                        <td>{{$friend->sender()->email}}</td>
                                         <td>{{$friend->sender()->firstname}}</td>
                                         <td>{{$friend->sender()->lastname}}</td>
                                         <td>

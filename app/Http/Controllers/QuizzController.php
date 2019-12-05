@@ -135,7 +135,6 @@ class QuizzController extends Controller
                 }
             }
             if ($note <= $quizz->validationNote){
-                session()->put(['first_iteration'=>true]);
                 session()->put(['errors_quizz'=>$score['errors']]);
                 return redirect(route('questions',['id'=>$quizz->id]));
             }
