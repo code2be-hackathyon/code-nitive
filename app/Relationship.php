@@ -25,7 +25,6 @@ class Relationship extends Model
         return 'string';
     }
 
-
     public function sender()
     {
         return $this->belongsTo(User::class,'sender_id')->first();
@@ -43,4 +42,6 @@ class Relationship extends Model
         }
         parent::save($options);
     }
+
+
 }
