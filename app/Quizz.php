@@ -57,6 +57,9 @@ class Quizz extends Model
     public function score($response)
     {
         $questions = $this->questions();
+        if((count($response)-1) != count($questions)){
+            return ['note'=>0,'errors'=>[]];
+        }
         $scores = [];
         $note = 0;
         $total = 0;

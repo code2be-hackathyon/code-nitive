@@ -1,0 +1,34 @@
+
+// la premiere question est la definition du quizz
+::Test d'exemple pour l'Hackat'yon::Hackath'Yon 2019{
+	=15
+	=10
+}
+
+// question: 10736  name: Japanese characters originally came from what country?
+::::Quelle est l année de création de la LOCO?{
+	~2013
+	=2014
+	~2015
+	~2016
+}
+
+
+// Drop shipping 
+::::Quelle est la définition du Drop Shipping?{
+	~Le bateau de Droopy
+	=une solution permettant de faire des magasins éphémères
+	=une solution permettant à un webmarchand de vendre en ligne
+	~Un terme de rugby
+}
+
+
+// Scrum
+::::Qu évoque pour vous le mot SCRUM?{
+	~le rugby
+	=un medicament
+	=une méthode développement
+	~rien de tout cela
+}
+
+

@@ -36,8 +36,7 @@
                     <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#modal-friends"><i class="fas fa-users"></i></button>
                 @endif
                 <form action="/quizz/{{$quizz->id}}" style="display: inline-block">
-                    @if($user_quizz->note <= $quizz->limitNote OR session()->get('first_iteration'))
-                        @php(session()->remove('first_iteration'))
+                    @if($user_quizz->note <= $quizz->limitNote)
                         <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-play"></i></button>
                     @endif
                 </form>

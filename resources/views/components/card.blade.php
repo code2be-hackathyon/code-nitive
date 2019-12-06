@@ -1,6 +1,6 @@
 
 <div class="card bg-white collapsed-card quizz {{implode(' ',array_map(function($item){return substr($item,1);},$quizz->tags()))}}" style="box-shadow: 0px 6px 18px -9px rgba(0,0,0,0.75);border-radius: 0">
-    <div class="card-header" data-card-widget="collapse" style="cursor: pointer;background: white">
+    <div class="card-header bg-blue" data-card-widget="collapse" style="cursor: pointer;background: white">
         <h5 class="card-title" style="font-size: 23px">
             {{$quizz->titleWithoutHashtag()}}
         </h5>
